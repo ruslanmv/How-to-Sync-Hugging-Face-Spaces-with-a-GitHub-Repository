@@ -18,7 +18,13 @@ git remote add space https://huggingface.co/spaces/HF_USERNAME/SPACE_NAME
 
 Replace `HF_USERNAME` with your Hugging Face username and `SPACE_NAME` with your Space name.
 
-For our example with `HF_USERNAME=ruslanmv` and `SPACE_NAME=Milvus-Client-Embedding`, the command would be:
+For our example, let us enter to your folder where you have your GitHub Repository
+
+```
+git clone https://github.com/ruslanmv/Milvus-Client-Embedding 
+cd Milvus-Client-Embedding 
+```
+Then by using  `HF_USERNAME=ruslanmv` and `SPACE_NAME=Milvus-Client-Embedding`, the command would be:
 
 ```bash
 git remote add space https://huggingface.co/spaces/ruslanmv/Milvus-Client-Embedding
