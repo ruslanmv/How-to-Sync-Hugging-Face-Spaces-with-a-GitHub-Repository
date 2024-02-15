@@ -32,13 +32,41 @@ git remote add space https://huggingface.co/spaces/ruslanmv/Milvus-Client-Embedd
 
 ## Step 2: Force push to sync everything for the first time
 
+
 Run the following command in your terminal to sync your GitHub repository and Hugging Face Space:
+
+```
+git add .
+git commit -m "Initial commit"
+```
+
 
 ```bash
 git push --force space main
 ```
 
-## Step 3: Set up a GitHub Action to push your main branch to Spaces
+## Step 3: Create Token in Hugging Face and copy the token
+First go to thee hf tokens [here](https://huggingface.co/settings/tokens)
+Click New  token with 
+![](assets/2024-02-15-12-32-56.png)
+
+## Step 4: Add your Hugging Face token in Github
+Go to settings
+![](assets/2024-02-15-12-29-19.png)
+Then find the left menu, Security and there find Actions click on that and then Click `New repository secret`
+![](assets/2024-02-15-12-31-57.png)
+and paste it 
+![](assets/2024-02-15-12-35-08.png)
+then
+![](assets/2024-02-15-12-35-44.png)
+
+
+
+## Step 4: Set up a GitHub Action to push your main branch to Spaces
+Go to Actions and click setup workflow yourself, for exmaple
+![](assets/2024-02-15-12-26-20.png)
+
+
 Create a new GitHub Action in your repository with the following content:
 
 ```yaml
@@ -46,7 +74,6 @@ name: Sync to Hugging Face hub
 on:
   push:
     branches: [main]
-
   # to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -72,6 +99,11 @@ For our example with `HF_USERNAME=ruslanmv` and `SPACE_NAME=Milvus-Client-Embedd
 run: git push https://ruslanmv:$HF_TOKEN@huggingface.co/spaces/ruslanmv/Milvus-Client-Embedding main
 ```
 
+![](assets/2024-02-15-12-38-21.png)
+
+and then commit
+![](assets/2024-02-15-12-40-13.png)
+
 ## Step 4: Create an Action
 Create an Action that automatically checks the file size of any new pull request
 Add another GitHub Action to your repository with the following content:
@@ -96,6 +128,7 @@ jobs:
 ```
 
 This action will automatically check the file size of any new pull request and ensure that no files larger than 10MB are added to the repository.
+![](assets/2024-02-15-12-43-51.png)
 
 ## Conclusion:
 
