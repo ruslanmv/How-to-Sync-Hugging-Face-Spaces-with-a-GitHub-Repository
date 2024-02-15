@@ -1,7 +1,18 @@
 # How to Sync Hugging Face Spaces with a GitHub Repository
 
 ## Introduction:
-In this blog, we'll walk you through the process of syncing a Hugging Face Space with a GitHub repository. As an example, we'll sync the following GitHub repository: https://github.com/ruslanmv/Milvus-Client-Embedding into a Hugging Face Space: https://huggingface.co/spaces/ruslanmv/Milvus-Client-Embedding.
+In this blog, we'll walk you through the process of syncing a Hugging Face Space with a GitHub repository. 
+
+As an example, we'll sync the following GitHub repository: 
+```
+https://github.com/ruslanmv/Milvus-Client-Embedding 
+```
+
+into a Hugging Face Space: 
+
+```
+https://huggingface.co/spaces/ruslanmv/Milvus-Client-Embedding.
+```
 
 ## Prerequisites:
 - A GitHub repository
@@ -129,6 +140,8 @@ jobs:
 
 This action will automatically check the file size of any new pull request and ensure that no files larger than 10MB are added to the repository.
 ![](assets/2024-02-15-12-43-51.png)
+
+For more custom syncs on Hugging Face visit the original source from [here](https://huggingface.co/docs/hub/en/spaces-github-actions).
 
 ## Conclusion:
 
