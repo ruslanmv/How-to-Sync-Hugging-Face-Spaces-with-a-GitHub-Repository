@@ -1,14 +1,15 @@
 # How to Sync Hugging Face Spaces with a GitHub Repository
 
-Introduction:
+## Introduction:
 In this blog, we'll walk you through the process of syncing a Hugging Face Space with a GitHub repository. As an example, we'll sync the following GitHub repository: https://github.com/ruslanmv/Milvus-Client-Embedding into a Hugging Face Space: https://huggingface.co/spaces/ruslanmv/Milvus-Client-Embedding.
 
-Prerequisites:
+## Prerequisites:
 - A GitHub repository
 - A Hugging Face Space
 - Hugging Face API token (found under API Tokens on your Hugging Face profile)
 
-Step 1: Set up your GitHub repository and Spaces app together
+## Step 1: Set up your GitHub repository and Spaces app together
+
 First, add your Spaces app as an additional remote to your existing Git repository by running the following command in your terminal:
 
 ```bash
@@ -23,14 +24,15 @@ For our example with `HF_USERNAME=ruslanmv` and `SPACE_NAME=Milvus-Client-Embedd
 git remote add space https://huggingface.co/spaces/ruslanmv/Milvus-Client-Embedding
 ```
 
-Step 2: Force push to sync everything for the first time
+## Step 2: Force push to sync everything for the first time
+
 Run the following command in your terminal to sync your GitHub repository and Hugging Face Space:
 
 ```bash
 git push --force space main
 ```
 
-Step 3: Set up a GitHub Action to push your main branch to Spaces
+## Step 3: Set up a GitHub Action to push your main branch to Spaces
 Create a new GitHub Action in your repository with the following content:
 
 ```yaml
@@ -64,7 +66,8 @@ For our example with `HF_USERNAME=ruslanmv` and `SPACE_NAME=Milvus-Client-Embedd
 run: git push https://ruslanmv:$HF_TOKEN@huggingface.co/spaces/ruslanmv/Milvus-Client-Embedding main
 ```
 
-Step 4: Create an Action that automatically checks the file size of any new pull request
+## Step 4: Create an Action
+Create an Action that automatically checks the file size of any new pull request
 Add another GitHub Action to your repository with the following content:
 
 ```yaml
@@ -88,5 +91,6 @@ jobs:
 
 This action will automatically check the file size of any new pull request and ensure that no files larger than 10MB are added to the repository.
 
-Conclusion:
+## Conclusion:
+
 By following these steps, you've successfully synced your GitHub repository with your Hugging Face Space. Now, any changes you push to your GitHub repository will automatically be reflected in your Hugging Face Space. In our specific example, changes pushed to the `ruslanmv/Milvus-Client-Embedding` GitHub repository will be synced with the `ruslanmv/Milvus-Client-Embedding` Hugging Face Space.
