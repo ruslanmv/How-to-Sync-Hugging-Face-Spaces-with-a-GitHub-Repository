@@ -55,7 +55,19 @@ git commit -m "Initial commit"
 ```bash
 git push --force space main
 ```
+If  you got the error message `src refspec main does not match any` indicates that the `main` branch doesn't exist in the Hugging Face Space.
 
+```bash
+git push --force space master:main
+```
+* `git push --force space master:main` instead of `git push --force space main`
+	+ `master` is the default branch in your GitHub repository.
+	+ `main` is the branch you want to create in your Hugging Face Space.
+	+ The `:` notation specifies the source and destination branches.
+
+By using `master:main`, you're telling Git to push the `master` branch from your local repository to the `main` branch in the Hugging Face Space.
+
+If you've already created a branch in your Hugging Face Space, make sure to replace `main` with the actual branch name.
 ## Step 3: Create Token in Hugging Face and copy the token
 First go to thee hf tokens [here](https://huggingface.co/settings/tokens)
 Click New  token with 
