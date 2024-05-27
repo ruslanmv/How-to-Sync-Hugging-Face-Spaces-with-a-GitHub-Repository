@@ -125,7 +125,17 @@ run: git push https://ruslanmv:$HF_TOKEN@huggingface.co/spaces/ruslanmv/Milvus-C
 ![](assets/2024-02-15-12-38-21.png)
 
 and then commit
+
+
+
+run: git push https://ruslanmv:$HF_TOKEN@huggingface.co/spaces/ruslanmv/Milvus-Client-Embedding main
+
 ![](assets/2024-02-15-12-40-13.png)
+If you got errors 
+
+```yaml
+run: git push https://ruslanmv:$HF_TOKEN@huggingface.co/spaces/ruslanmv/Milvus-Client-Embedding master:main
+```
 
 ## Step 4: Create an Action
 Create an Action that automatically checks the file size of any new pull request
