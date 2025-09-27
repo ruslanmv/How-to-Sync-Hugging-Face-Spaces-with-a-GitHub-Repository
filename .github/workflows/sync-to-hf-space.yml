@@ -1,0 +1,63 @@
+name: Sync to Hugging Face Space (force-by-default)
+
+on:
+  push:
+    branches: ["main", "master"]
+  # Optional manual trigger
+  workflow_dispatch: {}
+
+jobs:
+  sync-to-hub:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: hf-space-sync-canonical
+      cancel-in-progress: false
+
+    # Set these as Repository Variables:
+    #   Settings → Secrets and variables → Actions → Variables
+    #   HF_USERNAME = your HF username (e.g. ruslanmv)
+    #   SPACE_NAME  = your Space name (e.g. matrix-ai)
+    env:
+      HF_USERNAME: ${{ vars.HF_USERNAME }}
+      SPACE_NAME:  ${{ vars.SPACE_NAME }}
+
+    steps:
+      - name: Checkout (with LFS)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Prepare Git + LFS
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git lfs install --local
+
+      - name: Force push GitHub HEAD → Space main (GitHub is canonical)
+        env:
+          # Add this as a Repository Secret:
+          # Settings → Secrets and variables → Actions → New repository secret → HF_TOKEN
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          set -e
+          if [ -z "$HF_USERNAME" ] || [ -z "$SPACE_NAME" ]; then
+            echo "❌ Missing HF_USERNAME or SPACE_NAME repo Variables."
+            echo "   Add them under: Settings → Secrets and variables → Actions → Variables."
+            exit 1
+          fi
+          if [ -z "$HF_TOKEN" ]; then
+            echo "❌ Missing HF_TOKEN secret (write token for Spaces)."
+            echo "   Add it under: Settings → Secrets and variables → Actions → New repository secret."
+            exit 1
+          fi
+
+          REMOTE_URL="https://${HF_USERNAME}:${HF_TOKEN}@huggingface.co/spaces/${HF_USERNAME}/${SPACE_NAME}"
+
+          echo "🔁 Forcing GitHub HEAD → Space main..."
+          git push --force "$REMOTE_URL" HEAD:main
+
+          # Best-effort push for LFS objects (if any)
+          git lfs push --all "$REMOTE_URL" main || true
+
+          echo "✅ Sync complete: Space 'main' now matches GitHub HEAD."
