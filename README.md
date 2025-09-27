@@ -166,8 +166,9 @@ This action will automatically check the file size of any new pull request and e
 
 For more custom syncs on Hugging Face visit the original source from [here](https://huggingface.co/docs/hub/en/spaces-github-actions).
 
-To keep your Hugging Face Space in sync with GitHub automatically, add a GitHub Actions workflow (e.g., `.github/workflows/sync-to-hf-space.yml`) that runs on pushes to `main`/`master` and pushes your current HEAD to the Space’s `main` branch. The job should `actions/checkout` with `lfs: true`, then run `git push https://<HF_USERNAME>:$HF_TOKEN@huggingface.co/spaces/<HF_USERNAME>/<SPACE_NAME> HEAD:main`. Store your Hugging Face API token as a GitHub **Secret** (`HF_TOKEN`) and set **Repository Variables** for `HF_USERNAME` and `SPACE_NAME`. For a first-time bootstrap (or when branches diverge), allow a manual dispatch that does a `--force` push or maps `master:main`. Once configured, every new commit to GitHub will automatically update your Space; optionally add a second workflow to warn on files >10 MB so contributors use Git LFS.
+### GitHub is the single source of truth
 
+If GitHub is your canonical source, keep the Space perfectly in sync by **forcing** the Space’s `main` to match your repo’s current `HEAD`—manually with `git push --force "$REMOTE_URL" HEAD:main`, or automatically using the force-by-default CI workflow in your repo at [.github/workflows/sync-to-hf-space.yml](https://github.com/agent-matrix/matrix-ai/blob/main/.github/workflows/sync-to-hf-space.yml). Add one GitHub **Secret** (`HF_TOKEN`, your HF write token) and two **Repository Variables** (`HF_USERNAME`, `SPACE_NAME`). From then on, every push to `main` (or `master`) will overwrite the Space’s `main`, eliminating drift from edits made directly in the Space—simple, predictable, and production-friendly. Just note this is **destructive to remote edits**, so only use it when GitHub is the single source of truth.
 
 ## Conclusion:
 
