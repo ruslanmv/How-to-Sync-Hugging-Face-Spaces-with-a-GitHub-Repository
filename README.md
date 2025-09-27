@@ -163,7 +163,11 @@ jobs:
 This action will automatically check the file size of any new pull request and ensure that no files larger than 10MB are added to the repository.
 ![](assets/2024-02-15-12-43-51.png)
 
+
 For more custom syncs on Hugging Face visit the original source from [here](https://huggingface.co/docs/hub/en/spaces-github-actions).
+
+To keep your Hugging Face Space in sync with GitHub automatically, add a GitHub Actions workflow (e.g., `.github/workflows/sync-to-hf-space.yml`) that runs on pushes to `main`/`master` and pushes your current HEAD to the Space’s `main` branch. The job should `actions/checkout` with `lfs: true`, then run `git push https://<HF_USERNAME>:$HF_TOKEN@huggingface.co/spaces/<HF_USERNAME>/<SPACE_NAME> HEAD:main`. Store your Hugging Face API token as a GitHub **Secret** (`HF_TOKEN`) and set **Repository Variables** for `HF_USERNAME` and `SPACE_NAME`. For a first-time bootstrap (or when branches diverge), allow a manual dispatch that does a `--force` push or maps `master:main`. Once configured, every new commit to GitHub will automatically update your Space; optionally add a second workflow to warn on files >10 MB so contributors use Git LFS.
+
 
 ## Conclusion:
 
